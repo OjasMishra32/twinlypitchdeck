@@ -3,72 +3,49 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>twinly · seed deck · apr 2026</title>
-<meta name="description" content="twinly · a personal AI operator. Series Seed pitch deck." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<title>twinly | YC beta deck | Apr 2026</title>
+<meta name="description" content="twinly beta deck: an AI operator for founder follow-up and scheduling." />
 <style>
 :root {
-  --bg:        #0e0d0a;
-  --bg-2:      #15130f;
-  --bg-3:      #1e1b17;
-  --rule:      #2e2b24;
-  --rule-hi:   #484539;
-  --fg:        #f3ede1;
-  --fg-2:      #bdb6a6;
-  --fg-3:      #7e7971;
-  --fg-4:      #505160;
-  --accent:    #bde055;
-  --accent-hi: #d6f580;
-  --accent-dim:#9bc23d;
-  --ember:     #f07555;
-  --ember-hi:  #ff8e6b;
-  --red:       #e84a5c;
-  --amber:     #ffae33;
-  --green:     #3edb84;
-
-  --serif: 'Fraunces', 'Times New Roman', serif;
-  --serif-it: 'Instrument Serif', 'Fraunces', serif;
-  --sans:  'Hanken Grotesk', system-ui, sans-serif;
-  --mono:  'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
-
-  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-out-back:  cubic-bezier(0.34, 1.56, 0.64, 1);
+  --bg: #f7f4ee;
+  --paper: #fffdf8;
+  --ink: #151515;
+  --muted: #555b61;
+  --soft: #d9d7cf;
+  --line: #c9c5b9;
+  --blue: #2257d6;
+  --green: #128a57;
+  --red: #b93630;
+  --amber: #b36b00;
+  --shadow: 0 20px 60px rgba(38, 35, 28, 0.14);
+  --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono: "SF Mono", "JetBrains Mono", ui-monospace, Consolas, monospace;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 
 html, body {
-  margin: 0; padding: 0;
-  background: var(--bg);
-  color: var(--fg);
-  font-family: var(--sans);
-  font-size: 17px;
-  line-height: 1.62;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
-  height: 100vh;
-  width: 100vw;
-  user-select: none;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
 }
 
-html { color-scheme: dark; }
+body { user-select: none; }
 
-/* Frame */
 .deck {
   position: fixed;
   inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   background:
-    radial-gradient(ellipse 90% 55% at 30% 10%, color-mix(in srgb, var(--ember) 8%, transparent) 0%, transparent 60%),
-    radial-gradient(ellipse 70% 50% at 80% 90%, color-mix(in srgb, var(--accent) 6%, transparent) 0%, transparent 65%),
+    linear-gradient(90deg, rgba(34, 87, 214, 0.05), transparent 28%, transparent 72%, rgba(18, 138, 87, 0.06)),
     var(--bg);
-  overflow: hidden;
 }
 
 .stage {
@@ -77,2126 +54,845 @@ html { color-scheme: dark; }
   height: min(100vh, calc(100vw * 9 / 16));
   max-width: 1920px;
   max-height: 1080px;
-  display: grid;
-  place-items: center;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  overflow: hidden;
 }
 
-/* Each slide is absolute, only one visible */
 .slide {
   position: absolute;
   inset: 0;
   display: grid;
   align-content: center;
-  padding: clamp(40px, 6vh, 80px) clamp(40px, 7vw, 120px);
+  gap: clamp(26px, 3.4vh, 54px);
+  padding: clamp(54px, 7vh, 88px) clamp(62px, 7vw, 120px);
   opacity: 0;
+  transform: translateX(16px);
+  transition: opacity 220ms ease, transform 220ms ease;
   pointer-events: none;
-  transform: scale(0.99);
-  transition: opacity 600ms var(--ease-out-quint), transform 800ms var(--ease-out-quint);
 }
 
 .slide.active {
   opacity: 1;
+  transform: translateX(0);
   pointer-events: auto;
-  transform: scale(1);
   z-index: 2;
 }
 
-/* Animated children inside .active fire their transitions */
-.slide [data-anim] {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 700ms var(--ease-out-quint), transform 700ms var(--ease-out-quint);
-}
-.slide.active [data-anim] {
-  opacity: 1;
-  transform: translateY(0);
-}
-[data-anim][data-d="1"] { transition-delay: 80ms; }
-[data-anim][data-d="2"] { transition-delay: 180ms; }
-[data-anim][data-d="3"] { transition-delay: 300ms; }
-[data-anim][data-d="4"] { transition-delay: 440ms; }
-[data-anim][data-d="5"] { transition-delay: 580ms; }
-[data-anim][data-d="6"] { transition-delay: 720ms; }
-[data-anim][data-d="7"] { transition-delay: 860ms; }
-[data-anim][data-d="8"] { transition-delay: 1000ms; }
-[data-anim][data-d="9"] { transition-delay: 1140ms; }
-
-/* Slide-scale animations: width-fill bars, etc. */
-.slide [data-fill] {
-  width: 0 !important;
-  transition: width 1200ms var(--ease-out-quint);
-}
-.slide.active [data-fill] {
-  width: var(--target-width, 100%) !important;
-}
-.slide [data-draw] {
-  stroke-dashoffset: var(--len, 1000);
-  transition: stroke-dashoffset 1400ms var(--ease-out-quint);
-}
-.slide.active [data-draw] {
-  stroke-dashoffset: 0;
-}
-
-/* Type primitives */
-.label {
-  font-family: var(--mono);
-  font-size: clamp(11px, 0.78vw, 16px);
-  font-weight: 500;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--fg-3);
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-}
-.label::before {
+.slide::before {
   content: "";
-  display: inline-block;
-  width: 32px;
-  height: 1px;
-  background: var(--accent);
+  position: absolute;
+  left: clamp(30px, 4vw, 64px);
+  top: clamp(30px, 4vw, 64px);
+  width: 58px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--blue), var(--green));
 }
 
-.h1 {
-  font-family: var(--serif);
-  font-optical-sizing: auto;
-  font-variation-settings: 'SOFT' 40, 'WONK' 0;
-  font-weight: 400;
-  font-size: clamp(56px, 7.2vw, 138px);
-  line-height: 0.96;
-  letter-spacing: -0.04em;
-  color: var(--fg);
-  margin: 0;
-}
-.h1 em { color: var(--accent); font-style: italic; }
-.h1 b  { color: var(--accent); font-weight: 400; }
-
-.h2 {
-  font-family: var(--serif);
-  font-optical-sizing: auto;
-  font-variation-settings: 'SOFT' 40, 'WONK' 0;
-  font-weight: 400;
-  font-size: clamp(36px, 4.6vw, 86px);
-  line-height: 1.02;
-  letter-spacing: -0.035em;
-  color: var(--fg);
-  margin: 0;
-}
-.h2 em { color: var(--accent); font-style: italic; }
-
-.h3 {
-  font-family: var(--serif);
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-size: clamp(28px, 3.2vw, 58px);
-  line-height: 1.08;
-  letter-spacing: -0.03em;
+.eyebrow {
+  font-family: var(--mono);
+  font-size: clamp(12px, 0.9vw, 16px);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--blue);
 }
 
-.lead {
-  font-family: var(--serif-it);
-  font-style: italic;
-  font-size: clamp(20px, 2.0vw, 36px);
-  line-height: 1.32;
-  color: var(--fg-2);
-  letter-spacing: -0.018em;
-  font-weight: 400;
+h1, h2, h3, p { margin: 0; }
+
+.display {
+  max-width: 13ch;
+  font-size: clamp(68px, 8.5vw, 154px);
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+  font-weight: 780;
+}
+
+.title {
+  max-width: 15ch;
+  font-size: clamp(46px, 5.6vw, 96px);
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  font-weight: 760;
+}
+
+.subtitle {
+  max-width: 31ch;
+  font-size: clamp(23px, 2.1vw, 37px);
+  line-height: 1.16;
+  letter-spacing: -0.02em;
+  color: var(--muted);
+  font-weight: 560;
 }
 
 .body {
-  font-family: var(--sans);
-  font-size: clamp(14px, 1.05vw, 19px);
-  line-height: 1.55;
-  color: var(--fg-2);
-  font-weight: 400;
-}
-
-.mono {
-  font-family: var(--mono);
+  max-width: 46ch;
+  font-size: clamp(17px, 1.25vw, 24px);
+  line-height: 1.36;
+  color: var(--muted);
   font-weight: 500;
 }
 
-.accent { color: var(--accent); }
-.ember  { color: var(--ember); }
-.fg2 { color: var(--fg-2); }
-.fg3 { color: var(--fg-3); }
-.fg4 { color: var(--fg-4); }
+.blue { color: var(--blue); }
+.green { color: var(--green); }
+.red { color: var(--red); }
+.muted { color: var(--muted); }
 
-hr.rule {
-  border: none;
-  height: 1px;
-  background: var(--rule);
-  margin: 0;
-}
-
-/* HUD */
-.hud {
-  position: fixed;
-  z-index: 100;
-  pointer-events: none;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--fg-4);
-  font-weight: 500;
-}
-.hud.tl { top: 28px; left: 32px; }
-.hud.tr { top: 28px; right: 32px; }
-.hud.bl { bottom: 28px; left: 32px; }
-.hud.br { bottom: 28px; right: 32px; }
-
-.hud .dot {
-  display: inline-block;
-  width: 7px; height: 7px;
-  border-radius: 999px;
-  background: var(--accent);
-  margin-right: 12px;
-  box-shadow: 0 0 8px var(--accent);
-  vertical-align: middle;
-  animation: pulse 2.4s ease-in-out infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 0.6; transform: scale(0.9); }
-  50%      { opacity: 1;   transform: scale(1.2); }
-}
-
-/* Progress bar at very bottom */
-.progress {
-  position: fixed;
-  left: 32px; right: 32px; bottom: 22px;
-  height: 1px;
-  background: var(--rule);
-  z-index: 100;
-}
-.progress-fill {
-  height: 1px;
-  background: var(--accent);
-  width: 0;
-  transition: width 600ms var(--ease-out-quint);
-  box-shadow: 0 0 8px var(--accent);
-}
-
-/* Slide indicator dots */
-.dots {
-  position: fixed;
-  bottom: 32px; left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 8px;
-  z-index: 101;
-}
-.dots .d {
-  width: 5px; height: 5px;
-  border-radius: 999px;
-  background: var(--rule-hi);
-  transition: all 240ms var(--ease-out-quint);
-  cursor: pointer;
-  pointer-events: auto;
-}
-.dots .d.active {
-  width: 22px;
-  background: var(--accent);
-  box-shadow: 0 0 8px var(--accent);
-}
-.dots .d:hover { background: var(--fg-3); }
-
-/* Grain overlay */
-.grain {
-  position: fixed; inset: 0;
-  z-index: 99;
-  pointer-events: none;
-  opacity: 0.10;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.4' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-/* Vignette */
-.vignette {
-  position: fixed; inset: 0;
-  z-index: 98;
-  pointer-events: none;
-  background: radial-gradient(ellipse 95% 90% at 50% 50%, transparent 60%, rgba(0,0,0,0.32) 100%);
-}
-
-/* Cursor blink */
-.cursor {
-  display: inline-block;
-  width: 0.06em;
-  height: 0.78em;
-  background: currentColor;
-  margin-left: 0.04em;
-  vertical-align: -0.06em;
-  animation: blink 1s steps(2, jump-none) infinite;
-}
-@keyframes blink { 50% { opacity: 0; } }
-
-/* ============================================
-   SLIDE 1 — TITLE
-   ============================================ */
-.s-title { display: grid; align-content: center; justify-items: center; gap: clamp(14px, 2vh, 26px); }
-.s-title .topline {
-  display: flex; align-items: center; gap: 14px;
-  font-family: var(--mono);
-  font-size: clamp(11px, 0.85vw, 16px);
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--fg-3);
-  font-weight: 500;
-  text-align: center;
-}
-.s-title .wordmark {
-  font-family: var(--serif);
-  font-optical-sizing: auto;
-  font-variation-settings: 'SOFT' 40, 'WONK' 0;
-  font-size: clamp(140px, 17vw, 290px);
-  font-weight: 400;
-  line-height: 0.85;
-  letter-spacing: -0.055em;
-  color: var(--fg);
-  text-align: center;
-}
-.s-title .wordmark span { color: var(--accent); }
-.s-title .tagline {
-  font-family: var(--serif-it);
-  font-style: italic;
-  font-size: clamp(28px, 3vw, 56px);
-  color: var(--fg-2);
-  letter-spacing: -0.022em;
-  text-align: center;
-  line-height: 1.18;
-}
-.s-title .tagline span { color: var(--accent); }
-.s-title .meta {
-  display: flex;
-  gap: clamp(28px, 3vw, 60px);
-  margin-top: 16px;
-  font-family: var(--mono);
-  font-size: clamp(11px, 0.85vw, 14px);
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--fg-3);
-  font-weight: 500;
-}
-.s-title .meta span { display: flex; flex-direction: column; gap: 6px; }
-.s-title .meta span b { color: var(--fg); font-weight: 500; letter-spacing: 0.24em; }
-.s-title .lime-line {
-  width: 200px;
-  height: 1px;
-  background: var(--accent);
-  box-shadow: 0 0 12px var(--accent);
-  margin: 4px 0;
-}
-
-/* ============================================
-   SLIDE 2 — PROBLEM (with stat bento)
-   ============================================ */
-.s-problem .stats {
+.split {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(8px, 0.8vw, 18px);
-  margin-top: clamp(24px, 3vh, 50px);
-}
-.s-problem .stat {
-  background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
-  border: 1px solid var(--rule);
-  border-radius: 18px;
-  padding: clamp(20px, 2.4vw, 40px);
-  display: grid;
-  gap: 8px;
-  align-content: start;
-}
-.s-problem .stat .num {
-  font-family: var(--serif);
-  font-variation-settings: 'SOFT' 40;
-  font-size: clamp(40px, 4.8vw, 88px);
-  line-height: 1;
-  letter-spacing: -0.045em;
-  color: var(--fg);
-  font-weight: 400;
-}
-.s-problem .stat .num em {
-  color: var(--accent);
-  font-style: italic;
-  font-size: 0.55em;
-  letter-spacing: 0;
-  margin-left: 6px;
-  vertical-align: 0.2em;
-}
-.s-problem .stat .lab {
-  font-family: var(--mono);
-  font-size: clamp(10px, 0.75vw, 13px);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--fg-3);
-  font-weight: 500;
-}
-.s-problem .punch {
-  margin-top: clamp(20px, 2.6vh, 40px);
-  font-family: var(--serif-it);
-  font-style: italic;
-  font-size: clamp(22px, 2.0vw, 36px);
-  color: var(--fg-2);
-  letter-spacing: -0.018em;
-  line-height: 1.32;
-}
-
-/* ============================================
-   SLIDE 3 — WHY EXISTING TOOLS FAIL
-   ============================================ */
-.s-broken .cols {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(16px, 1.6vw, 30px);
-  margin-top: clamp(24px, 3vh, 50px);
-}
-.s-broken .col {
-  background: var(--bg-2);
-  border: 1px solid var(--rule);
-  border-radius: 18px;
-  padding: clamp(20px, 2.4vw, 36px);
-  display: grid;
-  gap: 14px;
-  align-content: start;
-  position: relative;
-}
-.s-broken .col h4 {
-  font-family: var(--mono);
-  font-size: clamp(12px, 0.95vw, 16px);
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--fg-3);
-  font-weight: 500;
-  margin: 0 0 4px 0;
-}
-.s-broken .col .verdict {
-  font-family: var(--serif);
-  font-size: clamp(28px, 2.8vw, 48px);
-  line-height: 1.04;
-  letter-spacing: -0.03em;
-  color: var(--fg);
-  font-weight: 400;
-  margin: 0;
-}
-.s-broken .col .verdict em { color: var(--ember); font-style: italic; }
-.s-broken .col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
-.s-broken .col li {
-  font-family: var(--sans);
-  font-size: clamp(13px, 1.0vw, 18px);
-  color: var(--fg-2);
-  line-height: 1.5;
-  padding-left: 18px;
-  position: relative;
-}
-.s-broken .col li::before {
-  content: "✕";
-  position: absolute;
-  left: 0;
-  color: var(--ember);
-  font-family: var(--mono);
-  font-weight: 600;
-}
-.s-broken .punchline {
-  margin-top: clamp(28px, 3vh, 56px);
-  text-align: center;
-  font-family: var(--serif-it);
-  font-style: italic;
-  font-size: clamp(28px, 2.8vw, 48px);
-  color: var(--fg);
-  letter-spacing: -0.022em;
-  line-height: 1.18;
-}
-.s-broken .punchline b { color: var(--accent); font-weight: 400; }
-
-/* ============================================
-   SLIDE 4 — SOLUTION
-   ============================================ */
-.s-solution .three {
-  display: grid;
-  gap: clamp(18px, 2vh, 36px);
-  margin-top: clamp(36px, 4vh, 70px);
-}
-.s-solution .row {
-  display: grid;
-  grid-template-columns: 100px 1fr;
-  align-items: baseline;
-  gap: 20px;
-  border-top: 1px solid var(--rule);
-  padding-top: clamp(14px, 1.6vh, 28px);
-}
-.s-solution .row .n {
-  font-family: var(--mono);
-  font-size: clamp(14px, 1.1vw, 20px);
-  letter-spacing: 0.22em;
-  color: var(--accent);
-  font-weight: 600;
-}
-.s-solution .row .t {
-  font-family: var(--serif);
-  font-size: clamp(28px, 3.0vw, 56px);
-  line-height: 1.06;
-  letter-spacing: -0.03em;
-  color: var(--fg);
-  font-weight: 400;
-}
-.s-solution .row .t em { color: var(--accent); font-style: italic; }
-
-/* ============================================
-   SLIDE 5 — PRODUCT
-   ============================================ */
-.s-product .layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(40px, 4vw, 80px);
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(44px, 5vw, 92px);
   align-items: center;
-  margin-top: clamp(20px, 2vh, 40px);
-}
-.s-product .features {
-  display: grid;
-  gap: clamp(14px, 2vh, 26px);
-  align-content: center;
-}
-.s-product .feat {
-  border-top: 1px solid var(--rule);
-  padding-top: clamp(12px, 1.4vh, 22px);
-}
-.s-product .feat h5 {
-  font-family: var(--serif);
-  font-size: clamp(20px, 1.8vw, 32px);
-  margin: 0 0 4px 0;
-  font-weight: 400;
-  color: var(--fg);
-  letter-spacing: -0.025em;
-}
-.s-product .feat p {
-  margin: 0;
-  font-family: var(--sans);
-  font-size: clamp(13px, 1.0vw, 17px);
-  color: var(--fg-3);
-  line-height: 1.5;
-}
-.s-product .device-stack {
-  position: relative;
-  display: grid;
-  place-items: center;
-  height: 100%;
-}
-.s-product .mac {
-  width: 100%;
-  max-width: 520px;
-  background: linear-gradient(180deg, #1a1814 0%, #0f0d0a 100%);
-  border: 1px solid var(--rule);
-  border-radius: 14px 14px 4px 4px;
-  padding: 12px;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 50px color-mix(in srgb, var(--accent) 13%, transparent);
-}
-.s-product .mac .screen {
-  background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-3) 100%);
-  border-radius: 4px;
-  padding: 16px;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--fg-2);
-  height: 280px;
-  position: relative;
-  overflow: hidden;
-}
-.s-product .mac .menu {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  margin-bottom: 14px;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--fg-3);
-}
-.s-product .mac .menu .dot { color: var(--accent); }
-.s-product .mac .row {
-  display: flex;
-  gap: 12px;
-  padding: 6px 0;
-  border-bottom: 1px solid var(--rule);
-  font-size: 11px;
-}
-.s-product .mac .row .tag { width: 56px; font-weight: 700; letter-spacing: 0.16em; }
-.s-product .mac .row .txt { flex: 1; color: var(--fg-2); }
-.s-product .mac .row .t   { color: var(--fg-4); font-size: 10px; }
-.s-product .mac-base {
-  width: calc(100% - -40px);
-  margin-left: -20px;
-  height: 16px;
-  background: linear-gradient(180deg, #1a1814 0%, #0a0907 100%);
-  border-radius: 0 0 16px 16px;
-  border: 1px solid var(--rule);
-  border-top: none;
-  position: relative;
-}
-.s-product .mac-base::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 3px;
-  transform: translateX(-50%);
-  width: 60px; height: 4px;
-  border-radius: 999px;
-  background: var(--bg);
 }
 
-/* ============================================
-   SLIDE 6 — HOW IT WORKS
-   ============================================ */
-.s-how .flow {
+.stack {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(14px, 1.6vw, 30px);
-  margin-top: clamp(36px, 4vh, 70px);
-}
-.s-how .step {
-  background: var(--bg-2);
-  border: 1px solid var(--rule);
-  border-radius: 18px;
-  padding: clamp(22px, 2vw, 32px);
-  display: grid;
-  gap: 14px;
-  align-content: start;
-  position: relative;
-}
-.s-how .step .n {
-  font-family: var(--mono);
-  font-size: clamp(11px, 0.8vw, 13px);
-  letter-spacing: 0.32em;
-  color: var(--accent);
-  font-weight: 600;
-  text-transform: uppercase;
-}
-.s-how .step h4 {
-  font-family: var(--serif);
-  font-size: clamp(28px, 2.4vw, 44px);
-  margin: 0;
-  letter-spacing: -0.025em;
-  color: var(--fg);
-  font-weight: 400;
-  line-height: 1.05;
-}
-.s-how .step p {
-  margin: 0;
-  font-family: var(--sans);
-  font-size: clamp(13px, 1.0vw, 16px);
-  color: var(--fg-3);
-  line-height: 1.5;
-}
-.s-how .step .icon {
-  font-family: var(--mono);
-  font-size: clamp(28px, 2.6vw, 44px);
-  color: var(--accent);
-  font-weight: 300;
-}
-.s-how .step .meta {
-  font-family: var(--mono);
-  font-size: clamp(10px, 0.72vw, 12px);
-  letter-spacing: 0.2em;
-  color: var(--fg-4);
-  text-transform: uppercase;
-  margin-top: auto;
-  padding-top: 12px;
-  border-top: 1px solid var(--rule);
+  gap: clamp(14px, 1.8vh, 26px);
 }
 
-/* ============================================
-   SLIDE 7 — WHY NOW
-   ============================================ */
-.s-why .vectors {
+.grid-2 {
   display: grid;
-  gap: clamp(12px, 1.4vh, 22px);
-  margin-top: clamp(24px, 3vh, 50px);
-}
-.s-why .v {
-  display: grid;
-  grid-template-columns: 80px 1fr 200px;
-  align-items: center;
-  gap: 24px;
-  padding: clamp(14px, 1.4vh, 22px) 0;
-  border-bottom: 1px solid var(--rule);
-}
-.s-why .v .n {
-  font-family: var(--serif);
-  font-size: clamp(40px, 3.6vw, 68px);
-  color: var(--fg-3);
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: -0.04em;
-}
-.s-why .v .t h5 {
-  font-family: var(--serif);
-  font-size: clamp(20px, 1.7vw, 30px);
-  margin: 0 0 4px 0;
-  font-weight: 400;
-  color: var(--fg);
-  letter-spacing: -0.025em;
-}
-.s-why .v .t p {
-  margin: 0;
-  font-family: var(--sans);
-  font-size: clamp(13px, 0.95vw, 16px);
-  color: var(--fg-3);
-  line-height: 1.5;
-}
-.s-why .v .yr {
-  font-family: var(--mono);
-  font-size: clamp(11px, 0.8vw, 14px);
-  letter-spacing: 0.18em;
-  text-align: right;
-  color: var(--accent);
-  font-weight: 600;
-  text-transform: uppercase;
-}
-.s-why .punch {
-  margin-top: clamp(28px, 3vh, 56px);
-  font-family: var(--serif-it);
-  font-style: italic;
-  font-size: clamp(24px, 2.2vw, 38px);
-  color: var(--fg);
-  letter-spacing: -0.022em;
-  line-height: 1.32;
-}
-.s-why .punch span { color: var(--accent); }
-
-/* ============================================
-   SLIDE 8 — MARKET
-   ============================================ */
-.s-market .layout {
-  display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: clamp(40px, 4vw, 90px);
-  align-items: center;
-  margin-top: clamp(24px, 3vh, 50px);
-}
-.s-market .stack {
-  display: grid;
-  gap: clamp(8px, 1vh, 16px);
-}
-.s-market .seg {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: end;
-  padding: clamp(16px, 2vh, 26px) clamp(20px, 2vw, 32px);
-  border: 1px solid var(--rule);
-  border-radius: 14px;
-  background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
-  position: relative;
-  overflow: hidden;
-}
-.s-market .seg .lim {
-  position: absolute;
-  inset: 0;
-  border-radius: 14px;
-  pointer-events: none;
-}
-.s-market .seg.tam .lim { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--fg-3) 35%, transparent); }
-.s-market .seg.sam .lim { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 25%, transparent); }
-.s-market .seg.som .lim { box-shadow: inset 0 0 0 2px var(--accent); }
-.s-market .seg .l {
-  display: grid;
-  gap: 6px;
-  align-content: end;
-}
-.s-market .seg .tag {
-  font-family: var(--mono);
-  font-size: clamp(10px, 0.75vw, 13px);
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--fg-3);
-  font-weight: 600;
-}
-.s-market .seg.som .tag { color: var(--accent); }
-.s-market .seg .desc {
-  font-family: var(--sans);
-  font-size: clamp(13px, 1.0vw, 17px);
-  color: var(--fg-2);
-  line-height: 1.4;
-}
-.s-market .seg .num {
-  font-family: var(--serif);
-  font-size: clamp(36px, 4.4vw, 84px);
-  font-weight: 400;
-  letter-spacing: -0.045em;
-  line-height: 1;
-  color: var(--fg);
-}
-.s-market .seg.som .num { color: var(--accent); }
-.s-market .breakdown {
-  display: grid;
-  gap: clamp(12px, 1.4vh, 20px);
-  align-content: center;
-}
-.s-market .breakdown h5 {
-  font-family: var(--mono);
-  font-size: clamp(11px, 0.85vw, 14px);
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 600;
-  margin: 0 0 10px 0;
-}
-.s-market .breakdown ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-.s-market .breakdown li {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  font-family: var(--sans);
-  font-size: clamp(13px, 1.0vw, 17px);
-  color: var(--fg-2);
-  padding: 8px 0;
-  border-bottom: 1px solid var(--rule);
-}
-.s-market .breakdown li b {
-  font-family: var(--mono);
-  font-weight: 600;
-  color: var(--fg);
-  letter-spacing: 0.04em;
-}
-.s-market .footnote {
-  margin-top: clamp(16px, 2vh, 28px);
-  font-family: var(--mono);
-  font-size: clamp(10px, 0.78vw, 13px);
-  letter-spacing: 0.2em;
-  color: var(--fg-4);
-  text-transform: uppercase;
-  font-weight: 500;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(14px, 1.4vw, 24px);
 }
 
-/* ============================================
-   SLIDE 9 — TRACTION
-   ============================================ */
-.s-traction .layout {
-  display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap: clamp(36px, 4vw, 80px);
-  align-items: stretch;
-  margin-top: clamp(20px, 2.4vh, 40px);
-}
-.s-traction .grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(8px, 0.8vw, 14px);
-}
-.s-traction .kpi {
-  background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
-  border: 1px solid var(--rule);
-  border-radius: 14px;
-  padding: clamp(20px, 2.2vw, 32px);
-  display: grid;
-  gap: 8px;
-  align-content: end;
-  min-height: clamp(150px, 18vh, 220px);
-}
-.s-traction .kpi .num {
-  font-family: var(--serif);
-  font-size: clamp(46px, 5.4vw, 100px);
-  line-height: 0.92;
-  letter-spacing: -0.045em;
-  font-weight: 400;
-  color: var(--fg);
-}
-.s-traction .kpi .num em {
-  color: var(--accent);
-  font-style: italic;
-  font-size: 0.42em;
-  margin-left: 4px;
-}
-.s-traction .kpi .lab {
-  font-family: var(--mono);
-  font-size: clamp(10px, 0.75vw, 13px);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--fg-3);
-  font-weight: 500;
-}
-.s-traction .chart {
-  background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
-  border: 1px solid var(--rule);
-  border-radius: 14px;
-  padding: clamp(20px, 2.2vw, 32px);
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  gap: 12px;
-}
-.s-traction .chart .head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  font-family: var(--mono);
-  font-size: clamp(10px, 0.75vw, 12px);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--fg-3);
-  font-weight: 500;
-}
-.s-traction .chart .head em {
-  color: var(--accent);
-  font-style: normal;
-  font-weight: 600;
-}
-.s-traction .chart svg { width: 100%; height: 100%; }
-
-/* ============================================
-   SLIDE 10 — BUSINESS MODEL + UNIT ECONOMICS
-   ============================================ */
-.s-bizmodel .tiers {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(14px, 1.4vw, 26px);
-  margin-top: clamp(20px, 2.4vh, 40px);
-}
-.s-bizmodel .tier {
-  background: var(--bg-2);
-  border: 1px solid var(--rule);
-  border-radius: 18px;
-  padding: clamp(22px, 2.4vw, 34px);
-  display: grid;
-  gap: 18px;
-  align-content: start;
-  position: relative;
-}
-.s-bizmodel .tier.featured {
-  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 8%, var(--bg-2)) 0%, var(--bg-2) 100%);
-  border-color: var(--accent);
-  box-shadow: 0 0 40px color-mix(in srgb, var(--accent) 18%, transparent);
-}
-.s-bizmodel .tier h5 {
-  font-family: var(--mono);
-  font-size: clamp(11px, 0.85vw, 14px);
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--fg-3);
-  font-weight: 600;
-  margin: 0;
-}
-.s-bizmodel .tier.featured h5 { color: var(--accent); }
-.s-bizmodel .tier .price {
-  font-family: var(--serif);
-  font-size: clamp(40px, 4.4vw, 80px);
-  font-weight: 400;
-  letter-spacing: -0.045em;
-  line-height: 1;
-  color: var(--fg);
-}
-.s-bizmodel .tier .price em {
-  color: var(--fg-3);
-  font-style: normal;
-  font-size: 0.32em;
-  margin-left: 4px;
-  font-family: var(--mono);
-  font-weight: 500;
-  letter-spacing: 0.16em;
-}
-.s-bizmodel .tier ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-.s-bizmodel .tier li {
-  font-family: var(--sans);
-  font-size: clamp(13px, 0.95vw, 16px);
-  color: var(--fg-2);
-  padding-left: 18px;
-  position: relative;
-  line-height: 1.4;
-}
-.s-bizmodel .tier li::before {
-  content: "+";
-  position: absolute;
-  left: 0;
-  color: var(--accent);
-  font-family: var(--mono);
-  font-weight: 700;
-}
-
-.s-bizmodel .economics {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: clamp(8px, 0.8vw, 14px);
-  margin-top: clamp(20px, 2.4vh, 40px);
-  padding-top: clamp(20px, 2.4vh, 40px);
-  border-top: 1px solid var(--rule);
-}
-.s-bizmodel .ue {
-  display: grid;
-  gap: 6px;
-}
-.s-bizmodel .ue .lab {
-  font-family: var(--mono);
-  font-size: clamp(10px, 0.7vw, 12px);
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--fg-4);
-  font-weight: 500;
-}
-.s-bizmodel .ue .val {
-  font-family: var(--serif);
-  font-size: clamp(28px, 2.8vw, 50px);
-  font-weight: 400;
-  letter-spacing: -0.035em;
-  line-height: 1;
-  color: var(--fg);
-}
-.s-bizmodel .ue.hero .val { color: var(--accent); }
-
-/* ============================================
-   SLIDE 11 — COMPETITION
-   ============================================ */
-.s-comp .layout {
-  display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: clamp(40px, 4vw, 80px);
-  align-items: center;
-  margin-top: clamp(20px, 2.4vh, 40px);
-}
-.s-comp .matrix {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1;
-  background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-3) 100%);
-  border: 1px solid var(--rule);
-  border-radius: 18px;
-  padding: clamp(28px, 3vw, 48px);
-}
-.s-comp .matrix .axis-y, .s-comp .matrix .axis-x {
-  position: absolute;
-  font-family: var(--mono);
-  font-size: clamp(10px, 0.75vw, 13px);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--fg-3);
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.s-comp .matrix .axis-y { top: 50%; left: 8px; transform: translateY(-50%) rotate(-90deg); transform-origin: left center; }
-.s-comp .matrix .axis-x { bottom: 8px; left: 50%; transform: translateX(-50%); }
-.s-comp .matrix .axis-y::after,
-.s-comp .matrix .axis-x::after { content: "→"; color: var(--accent); }
-
-.s-comp .grid-bg {
-  position: absolute;
-  inset: clamp(48px, 5vw, 80px);
-  background-image:
-    linear-gradient(to right, var(--rule) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
-  background-size: 50% 50%;
-  background-position: center;
-  opacity: 0.5;
-}
-.s-comp .pin {
-  position: absolute;
-  display: grid;
-  gap: 4px;
-  align-items: center;
-  justify-items: center;
-  transform: translate(-50%, -50%);
-}
-.s-comp .pin .dot {
-  width: 12px; height: 12px;
-  border-radius: 999px;
-  background: var(--fg-3);
-}
-.s-comp .pin .name {
-  font-family: var(--mono);
-  font-size: clamp(11px, 0.78vw, 14px);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--fg-2);
-  font-weight: 500;
-  white-space: nowrap;
-}
-.s-comp .pin.us .dot {
-  width: 24px; height: 24px;
-  background: var(--accent);
-  box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 20%, transparent),
-              0 0 24px var(--accent);
-  animation: orbit 3s ease-in-out infinite;
-}
-.s-comp .pin.us .name {
-  color: var(--accent);
-  font-weight: 700;
-  font-size: clamp(13px, 0.95vw, 16px);
-}
-@keyframes orbit {
-  0%, 100% { transform: scale(1); }
-  50%      { transform: scale(1.18); }
-}
-
-.s-comp .moats {
-  display: grid;
-  gap: clamp(10px, 1.2vh, 18px);
-}
-.s-comp .moats h5 {
-  font-family: var(--mono);
-  font-size: clamp(11px, 0.85vw, 14px);
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 600;
-  margin: 0 0 6px 0;
-}
-.s-comp .moat {
-  display: grid;
-  grid-template-columns: 24px 1fr;
-  gap: 14px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--rule);
-}
-.s-comp .moat .m {
-  font-family: var(--mono);
-  color: var(--accent);
-  font-weight: 700;
-  font-size: 14px;
-}
-.s-comp .moat .t {
-  font-family: var(--sans);
-  font-size: clamp(13px, 1.0vw, 17px);
-  color: var(--fg-2);
-  line-height: 1.4;
-}
-.s-comp .moat .t b { color: var(--fg); font-weight: 500; }
-
-/* ============================================
-   SLIDE 12 — TEAM
-   ============================================ */
-.s-team .layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(40px, 5vw, 100px);
-  align-items: center;
-  margin-top: clamp(24px, 3vh, 50px);
-}
-.s-team .card {
-  background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
-  border: 1px solid var(--rule);
-  border-radius: 24px;
-  padding: clamp(32px, 3.4vw, 60px);
-  display: grid;
-  gap: 18px;
-}
-.s-team .avatar {
-  width: clamp(80px, 8vw, 120px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 30% 30%, var(--accent) 0%, color-mix(in srgb, var(--accent) 60%, var(--ember)) 50%, var(--ember) 100%);
-  display: grid;
-  place-items: center;
-  font-family: var(--serif);
-  font-size: clamp(38px, 3.8vw, 56px);
-  color: var(--bg);
-  font-weight: 600;
-  letter-spacing: -0.04em;
-  box-shadow: 0 0 30px color-mix(in srgb, var(--accent) 25%, transparent);
-}
-.s-team .who h3 {
-  font-family: var(--serif);
-  font-size: clamp(28px, 3.0vw, 52px);
-  margin: 0;
-  letter-spacing: -0.03em;
-  font-weight: 400;
-  color: var(--fg);
-}
-.s-team .who .role {
-  font-family: var(--mono);
-  font-size: clamp(11px, 0.85vw, 14px);
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 600;
-  margin-top: 4px;
-}
-.s-team .bio {
-  font-family: var(--sans);
-  font-size: clamp(14px, 1.05vw, 18px);
-  color: var(--fg-2);
-  line-height: 1.55;
-}
-.s-team .bio b { color: var(--fg); font-weight: 500; }
-.s-team .right {
-  display: grid;
-  gap: clamp(14px, 1.6vh, 26px);
-  align-content: center;
-}
-.s-team .meta-block h5 {
-  font-family: var(--mono);
-  font-size: clamp(11px, 0.85vw, 14px);
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--fg-3);
-  font-weight: 600;
-  margin: 0 0 8px 0;
-}
-.s-team .stats-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(8px, 0.8vw, 14px);
-}
-.s-team .stats-row .it {
-  border: 1px solid var(--rule);
-  border-radius: 12px;
-  padding: clamp(14px, 1.6vw, 22px);
-  display: grid;
-  gap: 4px;
-}
-.s-team .stats-row .it .v {
-  font-family: var(--serif);
-  font-size: clamp(28px, 2.6vw, 44px);
-  letter-spacing: -0.035em;
-  font-weight: 400;
-  line-height: 1;
-}
-.s-team .stats-row .it .l {
-  font-family: var(--mono);
-  font-size: clamp(10px, 0.7vw, 12px);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--fg-3);
-  font-weight: 500;
-}
-.s-team .hiring {
-  border-top: 1px solid var(--rule);
-  padding-top: clamp(14px, 1.6vh, 24px);
-}
-.s-team .hiring .role-line {
-  font-family: var(--sans);
-  font-size: clamp(14px, 1.05vw, 18px);
-  color: var(--fg-2);
-  padding: 8px 0;
-  border-bottom: 1px solid var(--rule);
-  display: grid;
-  grid-template-columns: 1fr auto;
-}
-.s-team .hiring .role-line b { color: var(--fg); font-weight: 500; }
-.s-team .hiring .role-line i {
-  font-family: var(--mono);
-  font-style: normal;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-size: clamp(10px, 0.75vw, 12px);
-  font-weight: 600;
-  align-self: center;
-}
-
-/* ============================================
-   SLIDE 2 — FOUNDERS  (the "this team is inevitable" slide)
-   ============================================ */
-.s-founders .layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(20px, 2.4vw, 44px);
-  margin-top: clamp(20px, 2.4vh, 40px);
-}
-.s-founders .card {
-  background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
-  border: 1px solid var(--rule);
-  border-radius: 22px;
-  padding: clamp(24px, 2.8vw, 46px);
-  display: grid;
-  gap: 14px;
-  align-content: start;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
-}
-.s-founders .card::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: var(--accent);
-  box-shadow: 0 0 14px var(--accent);
-}
-.s-founders .card .top {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin-bottom: 4px;
-}
-.s-founders .avatar {
-  width: clamp(64px, 5.5vw, 86px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, var(--accent) 0%, color-mix(in srgb, var(--accent) 60%, var(--ember)) 50%, var(--ember) 100%);
-  display: grid;
-  place-items: center;
-  font-family: var(--serif);
-  font-size: clamp(28px, 2.7vw, 42px);
-  color: var(--bg);
-  font-weight: 600;
-  letter-spacing: -0.04em;
-  box-shadow: 0 0 24px color-mix(in srgb, var(--accent) 30%, transparent);
-  flex-shrink: 0;
-}
-.s-founders .card h3 {
-  font-family: var(--serif);
-  font-size: clamp(28px, 2.8vw, 48px);
-  margin: 0;
-  letter-spacing: -0.03em;
-  font-weight: 400;
-  color: var(--fg);
-  line-height: 1.05;
-}
-.s-founders .card .role {
-  font-family: var(--mono);
-  font-size: clamp(10px, 0.78vw, 13px);
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 600;
-  margin-top: 6px;
-}
-.s-founders .card .school {
-  font-family: var(--serif-it);
-  font-style: italic;
-  font-size: clamp(15px, 1.2vw, 20px);
-  color: var(--fg-3);
-  margin-top: -6px;
-  letter-spacing: -0.012em;
-}
-.s-founders .card .bio {
-  font-family: var(--sans);
-  font-size: clamp(13px, 1.0vw, 16px);
-  color: var(--fg-2);
-  line-height: 1.55;
-  margin: 0;
-}
-.s-founders .card .bio b { color: var(--fg); font-weight: 500; }
-.s-founders .card ul.creds {
-  list-style: none;
-  padding: 14px 0 0 0;
-  margin: 0;
-  border-top: 1px solid var(--rule);
-  display: grid;
-  gap: 8px;
-}
-.s-founders .card .creds li {
-  font-family: var(--sans);
-  font-size: clamp(12px, 0.9vw, 15px);
-  color: var(--fg-2);
-  padding-left: 18px;
-  position: relative;
-  line-height: 1.4;
-}
-.s-founders .card .creds li::before {
-  content: "+";
-  position: absolute;
-  left: 0;
-  color: var(--accent);
-  font-family: var(--mono);
-  font-weight: 700;
-}
-.s-founders .punch {
-  margin-top: clamp(20px, 2.6vh, 36px);
-  text-align: center;
-  font-family: var(--serif-it);
-  font-style: italic;
-  font-size: clamp(20px, 1.9vw, 32px);
-  color: var(--fg);
-  letter-spacing: -0.018em;
-  line-height: 1.32;
-}
-.s-founders .punch span { color: var(--accent); }
-
-/* ============================================
-   SLIDE 13 — ASK + VISION
-   ============================================ */
-.s-ask {
-  display: grid;
-  align-content: center;
-  justify-items: center;
-  gap: clamp(24px, 3vh, 50px);
-  text-align: center;
-}
-.s-ask .raise {
-  display: grid;
-  justify-items: center;
-  gap: 6px;
-}
-.s-ask .raise .amount {
-  font-family: var(--serif);
-  font-variation-settings: 'SOFT' 40;
-  font-size: clamp(140px, 16vw, 280px);
-  font-weight: 400;
-  letter-spacing: -0.05em;
-  line-height: 0.9;
-  color: var(--accent);
-  text-shadow: 0 0 60px color-mix(in srgb, var(--accent) 35%, transparent);
-}
-.s-ask .raise .terms {
-  font-family: var(--mono);
-  font-size: clamp(13px, 1vw, 18px);
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--fg-3);
-  font-weight: 500;
-  margin-top: 8px;
-}
-.s-ask .raise .terms b { color: var(--fg); font-weight: 600; }
-
-.s-ask .uof {
-  width: 100%;
-  max-width: 900px;
-  display: grid;
-  gap: 14px;
-}
-.s-ask .uof .bar {
-  display: flex;
-  width: 100%;
-  height: clamp(36px, 4vh, 56px);
-  border-radius: 999px;
-  overflow: hidden;
-  border: 1px solid var(--rule);
-  background: var(--bg-2);
-  box-shadow: 0 0 24px color-mix(in srgb, var(--accent) 14%, transparent);
-}
-.s-ask .uof .bar .seg {
-  display: grid;
-  place-items: center;
-  font-family: var(--mono);
-  font-size: clamp(10px, 0.85vw, 14px);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--bg);
-  font-weight: 700;
-}
-.s-ask .uof .legend {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-}
-.s-ask .uof .legend .it {
-  display: grid;
-  gap: 4px;
-  text-align: left;
-}
-.s-ask .uof .legend .it .sw {
-  width: 14px; height: 14px;
-  border-radius: 4px;
-  display: inline-block;
-  margin-right: 8px;
-  vertical-align: -2px;
-}
-.s-ask .uof .legend .it h5 {
-  font-family: var(--mono);
-  font-size: clamp(11px, 0.85vw, 14px);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--fg-2);
-  font-weight: 600;
-  margin: 0;
-}
-.s-ask .uof .legend .it p {
-  font-family: var(--sans);
-  font-size: clamp(11px, 0.8vw, 13px);
-  color: var(--fg-3);
-  margin: 0;
-  line-height: 1.4;
-  padding-left: 22px;
-}
-
-.s-ask .targets {
-  margin-top: clamp(20px, 2vh, 30px);
+.grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: clamp(14px, 1.4vw, 24px);
-  width: 100%;
-  max-width: 900px;
-}
-.s-ask .targets .t {
-  border: 1px solid var(--rule);
-  border-radius: 14px;
-  padding: clamp(14px, 1.6vh, 22px);
-  display: grid;
-  gap: 4px;
-}
-.s-ask .targets .t .yr {
-  font-family: var(--mono);
-  font-size: clamp(10px, 0.75vw, 12px);
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--fg-4);
-  font-weight: 500;
-}
-.s-ask .targets .t .v {
-  font-family: var(--serif);
-  font-size: clamp(24px, 2.4vw, 40px);
-  font-weight: 400;
-  letter-spacing: -0.035em;
-  line-height: 1.1;
-  color: var(--fg);
 }
 
-/* ============================================
-   SLIDE 14 — VISION (closer)
-   ============================================ */
-.s-vision {
+.card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+  padding: clamp(22px, 2.2vw, 36px);
   display: grid;
-  align-content: center;
-  justify-items: center;
-  gap: clamp(28px, 3vh, 50px);
-  text-align: center;
+  gap: clamp(10px, 1.2vh, 18px);
+  align-content: start;
 }
-.s-vision .big {
-  font-family: var(--serif);
-  font-variation-settings: 'SOFT' 40;
-  font-size: clamp(56px, 7.0vw, 140px);
-  line-height: 0.96;
-  letter-spacing: -0.04em;
-  font-weight: 400;
-  color: var(--fg);
-  max-width: 16ch;
+
+.card strong {
+  font-size: clamp(26px, 2.6vw, 48px);
+  line-height: 1;
+  letter-spacing: -0.035em;
 }
-.s-vision .big em { color: var(--accent); font-style: italic; }
-.s-vision .small {
-  font-family: var(--serif-it);
-  font-style: italic;
-  font-size: clamp(28px, 3vw, 56px);
-  color: var(--fg-2);
-  letter-spacing: -0.022em;
-  line-height: 1.18;
+
+.card span {
+  font-size: clamp(16px, 1.15vw, 22px);
+  line-height: 1.28;
+  color: var(--muted);
+  font-weight: 550;
 }
-.s-vision .small span { color: var(--accent); }
-.s-vision .sig {
-  margin-top: clamp(24px, 3vh, 50px);
+
+.metric {
+  border-top: 3px solid var(--ink);
+  padding-top: clamp(18px, 2.2vh, 32px);
+}
+
+.metric .num {
+  font-size: clamp(52px, 6vw, 108px);
+  line-height: 0.9;
+  letter-spacing: -0.055em;
+  font-weight: 780;
+}
+
+.metric .label {
+  margin-top: 10px;
+  font-family: var(--mono);
+  font-size: clamp(12px, 0.85vw, 15px);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.list {
+  display: grid;
+  gap: clamp(16px, 1.8vh, 28px);
+}
+
+.line-item {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 22px;
+  padding: clamp(16px, 1.8vh, 26px) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.line-item b {
+  font-family: var(--mono);
+  font-size: clamp(13px, 0.9vw, 16px);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--green);
+}
+
+.line-item span {
+  font-size: clamp(24px, 2.3vw, 42px);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  font-weight: 680;
+}
+
+.product-shot {
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: #f4f6fb;
+  overflow: hidden;
+  min-height: clamp(430px, 50vh, 620px);
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.product-shot .topbar {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: clamp(20px, 2vw, 40px);
+  padding: 14px 18px;
+  background: var(--ink);
+  color: #ffffff;
   font-family: var(--mono);
   font-size: clamp(11px, 0.85vw, 14px);
-  letter-spacing: 0.32em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--fg-3);
-  font-weight: 500;
-}
-.s-vision .sig b { color: var(--fg); font-weight: 600; }
-.s-vision .sig .lime-line {
-  width: 100px; height: 1px;
-  background: var(--accent);
-  box-shadow: 0 0 12px var(--accent);
 }
 
-/* ============================================
-   COMMON TITLE BLOCKS
-   ============================================ */
-.title-block { display: grid; gap: 18px; }
+.queue {
+  padding: clamp(18px, 2vw, 32px);
+  display: grid;
+  gap: 14px;
+}
+
+.task {
+  background: #ffffff;
+  border: 1px solid var(--soft);
+  border-radius: 8px;
+  padding: clamp(16px, 1.4vw, 24px);
+  display: grid;
+  gap: 8px;
+}
+
+.task .who {
+  font-family: var(--mono);
+  font-size: clamp(11px, 0.8vw, 13px);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blue);
+  font-weight: 800;
+}
+
+.task .text {
+  font-size: clamp(18px, 1.45vw, 26px);
+  line-height: 1.24;
+  font-weight: 650;
+}
+
+.task .action {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #ffffff;
+  font-family: var(--mono);
+  font-size: clamp(10px, 0.75vw, 12px);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.pill.light {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--soft);
+}
+
+.timeline {
+  display: grid;
+  gap: 16px;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 82px 1fr;
+  gap: 18px;
+  align-items: start;
+  padding: clamp(18px, 2vh, 28px);
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.step b {
+  font-family: var(--mono);
+  color: var(--blue);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.step span {
+  font-size: clamp(19px, 1.45vw, 27px);
+  line-height: 1.22;
+  font-weight: 650;
+}
+
+.quote {
+  border-left: 6px solid var(--green);
+  padding-left: clamp(24px, 2.5vw, 42px);
+  font-size: clamp(33px, 3.6vw, 66px);
+  line-height: 1.03;
+  letter-spacing: -0.04em;
+  font-weight: 760;
+}
+
+.price-table {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(18px, 1.8vw, 30px);
+}
+
+.price {
+  display: grid;
+  gap: 12px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: clamp(26px, 2.8vw, 46px);
+}
+
+.price h3 {
+  font-family: var(--mono);
+  font-size: clamp(12px, 0.9vw, 16px);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+
+.price .amount {
+  font-size: clamp(58px, 6vw, 112px);
+  line-height: 0.9;
+  letter-spacing: -0.055em;
+  font-weight: 780;
+}
+
+.price p {
+  font-size: clamp(17px, 1.25vw, 23px);
+  line-height: 1.32;
+  color: var(--muted);
+  font-weight: 550;
+}
+
+.competitors {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(12px, 1.2vw, 20px);
+}
+
+.competitor {
+  display: grid;
+  gap: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: clamp(22px, 2vw, 34px);
+  background: #ffffff;
+  min-height: 230px;
+}
+
+.competitor h3 {
+  font-size: clamp(23px, 2vw, 36px);
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+.competitor p {
+  font-size: clamp(15px, 1.05vw, 20px);
+  line-height: 1.32;
+  color: var(--muted);
+  font-weight: 550;
+}
+
+.competitor.us {
+  border: 3px solid var(--green);
+}
+
+.team {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(24px, 2.5vw, 42px);
+}
+
+.person {
+  display: grid;
+  grid-template-columns: clamp(120px, 10vw, 170px) 1fr;
+  gap: clamp(22px, 2.2vw, 34px);
+  align-items: center;
+  border-top: 3px solid var(--ink);
+  padding-top: clamp(24px, 2.5vh, 40px);
+}
+
+.photo {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(34, 87, 214, 0.18), rgba(18, 138, 87, 0.22)),
+    #e9e5d9;
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  font-size: clamp(36px, 4vw, 70px);
+  font-weight: 820;
+  letter-spacing: -0.06em;
+}
+
+.person h3 {
+  font-size: clamp(30px, 3vw, 54px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.person .role {
+  margin: 8px 0 14px;
+  font-family: var(--mono);
+  font-size: clamp(11px, 0.85vw, 14px);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blue);
+  font-weight: 800;
+}
+
+.person p {
+  font-size: clamp(16px, 1.15vw, 22px);
+  line-height: 1.33;
+  color: var(--muted);
+  font-weight: 550;
+}
+
+.ask-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: clamp(18px, 1.8vw, 30px);
+}
+
+.ask {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: clamp(24px, 2.5vw, 42px);
+  min-height: clamp(240px, 28vh, 340px);
+  display: grid;
+  align-content: space-between;
+  gap: 26px;
+}
+
+.ask b {
+  font-size: clamp(34px, 3.6vw, 64px);
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+}
+
+.ask span {
+  font-size: clamp(17px, 1.25vw, 24px);
+  line-height: 1.3;
+  color: var(--muted);
+  font-weight: 560;
+}
+
+.footer {
+  position: absolute;
+  left: clamp(30px, 4vw, 64px);
+  right: clamp(30px, 4vw, 64px);
+  bottom: clamp(22px, 3vh, 42px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: clamp(10px, 0.75vw, 13px);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.progress {
+  height: 3px;
+  width: 180px;
+  background: var(--soft);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--blue), var(--green));
+  transition: width 180ms ease;
+}
+
+.dots {
+  position: fixed;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  gap: 8px;
+}
+
+.dots button {
+  width: 7px;
+  height: 7px;
+  border: 0;
+  padding: 0;
+  border-radius: 99px;
+  background: rgba(21, 21, 21, 0.25);
+  cursor: pointer;
+}
+
+.dots button.active {
+  width: 28px;
+  background: var(--ink);
+}
 
 @media (max-width: 900px) {
-  .s-problem .stats { grid-template-columns: 1fr 1fr; }
-  .s-broken .cols { grid-template-columns: 1fr; }
-  .s-product .layout { grid-template-columns: 1fr; }
-  .s-how .flow { grid-template-columns: 1fr 1fr; }
-  .s-market .layout, .s-traction .layout, .s-comp .layout, .s-team .layout { grid-template-columns: 1fr; }
-  .s-bizmodel .tiers { grid-template-columns: 1fr; }
-  .s-bizmodel .economics { grid-template-columns: repeat(2, 1fr); }
+  .stage {
+    width: 100vw;
+    height: 100vh;
+    max-width: none;
+    max-height: none;
+    box-shadow: none;
+  }
+  .slide { padding: 42px 36px; }
+  .slide.active {
+    overflow-y: auto;
+    align-content: start;
+    padding-bottom: 110px;
+  }
+  .split, .grid-2, .grid-3, .team, .ask-list, .price-table, .competitors {
+    grid-template-columns: 1fr;
+  }
+  .display { font-size: clamp(54px, 14vw, 96px); }
+  .title { font-size: clamp(40px, 10vw, 72px); }
+  .product-shot { min-height: 360px; }
+  .footer { display: none; }
+  .dots { display: none; }
 }
 
-.kbd-hint {
-  position: fixed;
-  bottom: 56px;
-  right: 32px;
-  z-index: 100;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--fg-4);
-  font-weight: 500;
-  display: grid;
-  gap: 4px;
-  text-align: right;
-  pointer-events: none;
-  opacity: 0.5;
-  transition: opacity 600ms;
+@media print {
+  html, body { overflow: visible; height: auto; background: #ffffff; }
+  .deck { position: static; display: block; background: #ffffff; }
+  .stage { width: 100vw; height: auto; max-width: none; max-height: none; box-shadow: none; overflow: visible; }
+  .slide { position: relative; opacity: 1; transform: none; min-height: 100vh; page-break-after: always; }
+  .dots { display: none; }
 }
-.kbd-hint.fade { opacity: 0; }
-
 </style>
 </head>
 <body>
-
-<div class="grain"></div>
-<div class="vignette"></div>
-
-<div class="hud tl"><span class="dot"></span>twinly · seed deck · apr 2026</div>
-<div class="hud tr"><span id="counter">01 / 14</span></div>
-
-<div class="kbd-hint" id="hint">
-  <div>← →  navigate</div>
-  <div>F  fullscreen</div>
-</div>
-
 <div class="deck">
-  <div class="stage">
-
-    <!-- ========== SLIDE 1 — TITLE ========== -->
-    <section class="slide s-title active" data-i="1">
-      <div data-anim data-d="1" class="topline">series seed · apr 2026 · confidential</div>
-      <div data-anim data-d="2" class="lime-line"></div>
-      <h1 data-anim data-d="3" class="wordmark">twinly<span>.</span></h1>
-      <p data-anim data-d="4" class="tagline">anything you can do, <span>twinly can</span>.</p>
-      <div data-anim data-d="5" style="display:flex; gap: clamp(20px, 2.4vw, 50px); align-items: center; font-family: var(--mono); font-size: clamp(11px, 0.85vw, 14px); letter-spacing: 0.22em; text-transform: uppercase; color: var(--fg-3); font-weight: 500; margin-top: 8px;">
-        <span><b style="color: var(--accent); font-weight: 700;">5 mo</b> · blank repo to live</span>
-        <span style="color: var(--rule-hi);">·</span>
-        <span><b style="color: var(--accent); font-weight: 700;">47</b> · founders in beta</span>
-        <span style="color: var(--rule-hi);">·</span>
-        <span><b style="color: var(--accent); font-weight: 700;">14,212</b> · actions / week</span>
+  <main class="stage">
+    <section class="slide active" data-title="Title">
+      <div class="stack">
+        <div class="eyebrow">YC beta deck | Apr 2026</div>
+        <h1 class="display">twinly.</h1>
+        <p class="subtitle">An AI operator for founder follow-up and scheduling.</p>
       </div>
-      <div data-anim data-d="6" class="meta">
-        <span><b>founders</b><span>ojasva mishra · zechariah jemaneh</span></span>
-        <span><b>raise</b><span>$4M seed @ $24M post</span></span>
-        <span><b>contact</b><span>founders@twinly.tech</span></span>
+      <div class="grid-3">
+        <div class="metric">
+          <div class="num">47</div>
+          <div class="label">closed beta founders</div>
+        </div>
+        <div class="metric">
+          <div class="num">14k+</div>
+          <div class="label">actions per week</div>
+        </div>
+        <div class="metric">
+          <div class="num">300+</div>
+          <div class="label">waitlist to convert</div>
+        </div>
       </div>
+      <div class="footer"><span>founders@twinly.tech</span><span id="count-1">01 / 10</span></div>
     </section>
 
-    <!-- ========== SLIDE 2 — FOUNDERS ========== -->
-    <section class="slide s-founders" data-i="2">
-      <div class="title-block">
-        <div data-anim data-d="1" class="label">two cofounders · class of 2026</div>
-        <h2 data-anim data-d="2" class="h1">obsessed builders.<br/><em>both barely 18.</em></h2>
-      </div>
-      <div class="layout">
-        <div data-anim data-d="3" class="card">
-          <div class="top">
-            <div class="avatar">o</div>
-            <div>
-              <h3>ojasva mishra</h3>
-              <div class="role">founder · ceo · engineering</div>
-            </div>
-          </div>
-          <div class="school">University of Florida · 2026</div>
-          <p class="bio"><b>twinly is his third company.</b> already founded <b>fusion bots</b> (revenue-positive education-robotics co, team of 12) and <b>glassbox ai</b> before this. shipped twinly's entire stack solo in five months: macOS desktop, iOS companion, agent runtime, approval queue, the 12-axis voice fingerprint. trained twin v0 on his own writing first.</p>
-          <ul class="creds">
-            <li>3rd-time founder · fusion bots · glassbox ai · twinly</li>
-            <li>1 of 13 · un mgcy governing committee · digital policy</li>
-            <li>shipped macOS + iOS apps + agent runtime end-to-end</li>
-            <li>ib · math AA, physics, econ HL · 4.35 wgpa · 1800+ chess</li>
-          </ul>
-        </div>
-        <div data-anim data-d="5" class="card">
-          <div class="top">
-            <div class="avatar">z</div>
-            <div>
-              <h3>zechariah jemaneh</h3>
-              <div class="role">cofounder · ops + product</div>
-            </div>
-          </div>
-          <div class="school">Harvard · Applied Math · 2026</div>
-          <p class="bio"><b>brings the math.</b> drives unit-economics modeling, voice fingerprint validation, customer interviews and beta operations. the reason every number in this deck is defensible. real-world finance ops experience that turned into an instinct for what knowledge workers actually want done for them.</p>
-          <ul class="creds">
-            <li>national african american recognition recipient</li>
-            <li>national first-generation recognition honoree</li>
-            <li>national merit commended scholar</li>
-            <li>11 APs incl. physics c, calc bc · top of class</li>
-          </ul>
-        </div>
-      </div>
-      <p data-anim data-d="7" class="punch">we're <span>twinly's first two users</span>. we built the thing we needed.</p>
-    </section>
-
-    <!-- ========== SLIDE 3 — PROBLEM ========== -->
-    <section class="slide s-problem" data-i="2">
-      <div class="title-block">
-        <div data-anim data-d="1" class="label">the problem</div>
-        <h2 data-anim data-d="2" class="h1">every knowledge worker<br/>has <em>two</em> jobs.</h2>
-        <p data-anim data-d="3" class="lead" style="max-width: 24ch;">
-          the one you were hired for. and the admin layer of being a modern person.
-        </p>
-      </div>
-      <div class="stats">
-        <div data-anim data-d="4" class="stat">
-          <div class="num">12<em>hrs/wk</em></div>
-          <div class="lab">on life-admin</div>
-        </div>
-        <div data-anim data-d="5" class="stat">
-          <div class="num">47<em>tabs</em></div>
-          <div class="lab">open right now</div>
-        </div>
-        <div data-anim data-d="6" class="stat">
-          <div class="num">$4,800<em>/yr</em></div>
-          <div class="lab">leaked to late fees · forgotten subs · missed reimbursements</div>
-        </div>
-        <div data-anim data-d="7" class="stat">
-          <div class="num">73%<em></em></div>
-          <div class="lab">of all chatbot trials canceled within 30 days</div>
-        </div>
-      </div>
-      <p data-anim data-d="8" class="punch">you didn't sign up for this. you can't stop doing it.</p>
-    </section>
-
-    <!-- ========== SLIDE 3 — WHY EXISTING TOOLS FAIL ========== -->
-    <section class="slide s-broken" data-i="3">
-      <div class="title-block">
-        <div data-anim data-d="1" class="label">why existing tools fail</div>
-        <h2 data-anim data-d="2" class="h1">AI was supposed<br/>to fix it. <em>it didn't.</em></h2>
-      </div>
-      <div class="cols">
-        <div data-anim data-d="3" class="col">
-          <h4>chatbots</h4>
-          <p class="verdict">they <em>talk</em>.<br/>they don't <em>do</em>.</p>
-          <ul>
-            <li>need a prompt for everything</li>
-            <li>can't sign in to your gmail</li>
-            <li>sound nothing like you</li>
-            <li>forget you between sessions</li>
-          </ul>
-        </div>
-        <div data-anim data-d="4" class="col">
-          <h4>rpa &amp; workflow tools</h4>
-          <p class="verdict">rigid.<br/>brittle.<br/><em>generic.</em></p>
-          <ul>
-            <li>you build the workflow yourself</li>
-            <li>break the second a form changes</li>
-            <li>still doesn't sound like you</li>
-            <li>$300/seat for a glorified macro</li>
-          </ul>
-        </div>
-        <div data-anim data-d="5" class="col">
-          <h4>human assistants</h4>
-          <p class="verdict">$40/hr.<br/>24h reply.<br/><em>not you.</em></p>
-          <ul>
-            <li>they're great until you scale</li>
-            <li>can't ship code or call comcast</li>
-            <li>sound like an assistant, not you</li>
-            <li>you worry about everything they touch</li>
-          </ul>
-        </div>
-      </div>
-      <p data-anim data-d="6" class="punchline">you don't need an assistant. <b>you need a clone.</b></p>
-    </section>
-
-    <!-- ========== SLIDE 4 — SOLUTION ========== -->
-    <section class="slide s-solution" data-i="4">
-      <div class="title-block">
-        <div data-anim data-d="1" class="label">our answer</div>
-        <h2 data-anim data-d="2" class="h1">twinly is <em>your twin</em>.</h2>
-        <p data-anim data-d="3" class="lead" style="max-width: 36ch;">
-          a personal AI operator that learns how you write, decide and prefer things,
-          then runs the admin layer of your life. in your voice. with your approval.
-        </p>
-      </div>
-      <div class="three">
-        <div data-anim data-d="5" class="row">
-          <div class="n">01</div>
-          <div class="t">reads everything <em>you've already written</em>.</div>
-        </div>
-        <div data-anim data-d="6" class="row">
-          <div class="n">02</div>
-          <div class="t">speaks in <em>your voice</em>. text and audio. indistinguishable.</div>
-        </div>
-        <div data-anim data-d="7" class="row">
-          <div class="n">03</div>
-          <div class="t">ships <em>real work</em>. inboxes, calls, taxes, code. you just approve.</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== SLIDE 5 — PRODUCT ========== -->
-    <section class="slide s-product" data-i="5">
-      <div class="title-block">
-        <div data-anim data-d="1" class="label">the product</div>
-        <h2 data-anim data-d="2" class="h1">your twin runs<br/>on your <em>Mac</em>.</h2>
-        <p data-anim data-d="3" class="lead">you carry the remote.</p>
-      </div>
-      <div class="layout">
-        <div data-anim data-d="4" class="features">
-          <div class="feat"><h5>voice fingerprint</h5><p>12-axis profile of how you write, paced from 14 days of your existing email, slack, and notes.</p></div>
-          <div class="feat"><h5>voice clone, on-device</h5><p>30 seconds of audio is enough. twinly takes calls and meetings, sounding like you.</p></div>
-          <div class="feat"><h5>tool use</h5><p>gmail, calendar, browser, code, files, phone. every action runs through a policy you control.</p></div>
-          <div class="feat"><h5>approval queue</h5><p>nothing ships without you. tap approve. the queue is the trust surface.</p></div>
-          <div class="feat"><h5>100% local data</h5><p>writing, voice, tasks live on your machine, encrypted via keychain. no cloud writes. no telemetry.</p></div>
-        </div>
-        <div data-anim data-d="6" class="device-stack">
-          <div class="mac">
-            <div class="screen">
-              <div class="menu">
-                <span class="dot">●</span> twinly · live
-                <span style="margin-left:auto;">⌘⇧t</span>
-              </div>
-              <div class="row"><span class="tag" style="color:var(--fg-2)">draft</span><span class="txt">term sheet friday · marc</span><span class="t">3m</span></div>
-              <div class="row"><span class="tag" style="color:var(--green)">call</span><span class="txt">comcast · −$40 · settled</span><span class="t">7m</span></div>
-              <div class="row"><span class="tag" style="color:var(--green)">ship</span><span class="txt">PR #247 merged · agent loop</span><span class="t">12m</span></div>
-              <div class="row"><span class="tag" style="color:var(--amber)">hold</span><span class="txt">approve · reply mom · sunday</span><span class="t">18m</span></div>
-              <div class="row"><span class="tag" style="color:var(--fg-2)">book</span><span class="txt">flight SFO→JFK · apr 28 · $312</span><span class="t">24m</span></div>
-              <div class="row"><span class="tag" style="color:var(--accent)">filed</span><span class="txt">1099-NEC · IRS · 2025</span><span class="t">30m</span></div>
-            </div>
-          </div>
-          <div class="mac-base"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== SLIDE 6 — HOW IT WORKS ========== -->
-    <section class="slide s-how" data-i="6">
-      <div class="title-block">
-        <div data-anim data-d="1" class="label">how it works</div>
-        <h2 data-anim data-d="2" class="h1">four steps. <em>once.</em><br/>then it runs forever.</h2>
-      </div>
-      <div class="flow">
-        <div data-anim data-d="3" class="step">
-          <div class="n">step 01</div>
-          <div class="icon">⌘</div>
-          <h4>train</h4>
-          <p>drop in 14 days of email, slack, notes. add a 30-second voice sample. on-device, encrypted.</p>
-          <div class="meta">~6 minutes · one-time</div>
-        </div>
-        <div data-anim data-d="4" class="step">
-          <div class="n">step 02</div>
-          <div class="icon">▸</div>
-          <h4>command</h4>
-          <p>one sentence. "follow up with marc · book the dentist · cancel substack." that's the whole UI.</p>
-          <div class="meta">⌘⇧t from anywhere</div>
-        </div>
-        <div data-anim data-d="5" class="step">
-          <div class="n">step 03</div>
-          <div class="icon">↻</div>
-          <h4>execute</h4>
-          <p>twin plans, drafts, opens browsers, makes calls, runs tools. policy gates every spend &amp; send.</p>
-          <div class="meta">avg 18s per task</div>
-        </div>
-        <div data-anim data-d="6" class="step">
-          <div class="n">step 04</div>
-          <div class="icon">✓</div>
-          <h4>approve</h4>
-          <p>queue lands on your phone. tap approve. it ships. tap edit, it rewrites in your voice.</p>
-          <div class="meta">94% auto-approved</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== SLIDE 7 — WHY NOW ========== -->
-    <section class="slide s-why" data-i="7">
-      <div class="title-block">
-        <div data-anim data-d="1" class="label">why now</div>
-        <h2 data-anim data-d="2" class="h1">four things just <em>converged</em>.</h2>
-      </div>
-      <div class="vectors">
-        <div data-anim data-d="3" class="v">
-          <div class="n">01</div>
-          <div class="t"><h5>llm voice-matching crossed the indistinguishability bar</h5><p>sonnet 4.6 can match a voice fingerprint at 97% blind-pass rate. up from 68% in 2024.</p></div>
-          <div class="yr">2025 → 2026</div>
-        </div>
-        <div data-anim data-d="4" class="v">
-          <div class="n">02</div>
-          <div class="t"><h5>30-second voice clones became broadcast-quality</h5><p>elevenlabs v3 and openai's voice api hit human-indistinguishable on naturalistic speech.</p></div>
-          <div class="yr">q4 2025</div>
-        </div>
-        <div data-anim data-d="5" class="v">
-          <div class="n">03</div>
-          <div class="t"><h5>on-device AI compute became feasible</h5><p>apple silicon m4 + private cloud compute means real models run locally. local-first is the new default.</p></div>
-          <div class="yr">2024 → 2026</div>
-        </div>
-        <div data-anim data-d="6" class="v">
-          <div class="n">04</div>
-          <div class="t"><h5>chatbot fatigue hit critical mass</h5><p>73% trial-to-cancel on personal AI chatbots. people are exhausted. they want execution, not chat.</p></div>
-          <div class="yr">live · 2026</div>
-        </div>
-      </div>
-      <p data-anim data-d="7" class="punch">the first generation of personal AI was the chatbot.<br/>the second is <span>the twin</span>.</p>
-    </section>
-
-    <!-- ========== SLIDE 8 — MARKET ========== -->
-    <section class="slide s-market" data-i="8">
-      <div class="title-block">
-        <div data-anim data-d="1" class="label">market</div>
-        <h2 data-anim data-d="2" class="h1"><em>$<span data-counter data-target="162">0</span>B</em> annual market.<br/>captured by no one.</h2>
-      </div>
-      <div class="layout">
+    <section class="slide" data-title="Problem">
+      <div class="split">
         <div class="stack">
-          <div data-anim data-d="3" class="seg tam">
-            <div class="lim"></div>
-            <div class="l">
-              <span class="tag">tam</span>
-              <span class="desc">global premium knowledge workers · 270M · $50/mo</span>
+          <div class="eyebrow">Problem</div>
+          <h2 class="title">Founders lose momentum in the inbox.</h2>
+          <p class="subtitle">The work is small, constant, and expensive when it slips.</p>
+        </div>
+        <div class="list">
+          <div class="line-item"><b>sales</b><span>Leads go cold because follow-up is manual.</span></div>
+          <div class="line-item"><b>meetings</b><span>Scheduling eats the same calendar focus every day.</span></div>
+          <div class="line-item"><b>investors</b><span>Updates, replies, intros, and prep scatter across tools.</span></div>
+          <div class="line-item"><b>trust</b><span>Generic assistants cannot write or decide like you.</span></div>
+        </div>
+      </div>
+      <div class="footer"><span>one painful workflow first</span><span>02 / 10</span></div>
+    </section>
+
+    <section class="slide" data-title="Wedge">
+      <div class="stack">
+        <div class="eyebrow">Wedge</div>
+        <h2 class="title">We are not selling a clone that does everything.</h2>
+        <p class="subtitle">We start with one job founders already pay with time: follow up, schedule, and keep relationships warm.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <strong class="blue">1</strong>
+          <span>Train on sent email so drafts sound like the founder.</span>
+        </div>
+        <div class="card">
+          <strong class="green">2</strong>
+          <span>Execute inbox and calendar tasks with approval before sending.</span>
+        </div>
+        <div class="card">
+          <strong>3</strong>
+          <span>Earn expansion only after users trust the first workflow.</span>
+        </div>
+      </div>
+      <div class="footer"><span>narrow now, expand later</span><span>03 / 10</span></div>
+    </section>
+
+    <section class="slide" data-title="Product">
+      <div class="split">
+        <div class="stack">
+          <div class="eyebrow">Product</div>
+          <h2 class="title">A queue of ready-to-approve work.</h2>
+          <p class="body">Twinly reads the context, drafts the response, checks the calendar, and asks for approval before anything leaves the account.</p>
+        </div>
+        <div class="product-shot" aria-label="Twinly approval queue mockup">
+          <div class="topbar"><span>twinly approval queue</span><span>3 ready</span></div>
+          <div class="queue">
+            <div class="task">
+              <div class="who">sales follow-up</div>
+              <div class="text">Draft reply to Maya, add the Loom, and suggest Thu 2:30 or Fri 11.</div>
+              <div class="action"><span class="pill">approve</span><span class="pill light">edit</span></div>
             </div>
-            <span class="num">$<span data-counter data-target="162">0</span>B</span>
-          </div>
-          <div data-anim data-d="4" class="seg sam">
-            <div class="lim"></div>
-            <div class="l">
-              <span class="tag">sam</span>
-              <span class="desc">english-speaking ICs &amp; founders · 70M · $50/mo</span>
+            <div class="task">
+              <div class="who">investor update</div>
+              <div class="text">Send the beta metric update to Aaron, with a short ask for 2 founder intros.</div>
+              <div class="action"><span class="pill">approve</span><span class="pill light">hold</span></div>
             </div>
-            <span class="num">$<span data-counter data-target="42">0</span>B</span>
-          </div>
-          <div data-anim data-d="5" class="seg som">
-            <div class="lim"></div>
-            <div class="l">
-              <span class="tag">som · year 3</span>
-              <span class="desc">tech / finance / legal early adopters · 2M paying</span>
+            <div class="task">
+              <div class="who">calendar</div>
+              <div class="text">Move customer call after demo prep. No conflicts found.</div>
+              <div class="action"><span class="pill">approve</span><span class="pill light">details</span></div>
             </div>
-            <span class="num">$<span data-counter data-target="1.2" data-decimals="1">0</span>B</span>
-          </div>
-        </div>
-        <div data-anim data-d="6" class="breakdown">
-          <h5>how the math works</h5>
-          <ul>
-            <li>premium knowledge workers <b>270M</b></li>
-            <li>blended price ($49 / $199 / $499) <b>$109/mo</b></li>
-            <li>annual contract value <b>$1,308</b></li>
-            <li>top-of-funnel CAC (founder-led) <b>$42</b></li>
-            <li>LTV @ 30mo lifetime <b>$3,270</b></li>
-            <li>ltv / cac <b>78×</b></li>
-          </ul>
-          <div class="footnote">comp set · notion $10B · linear $1.25B · mercury $1.6B</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== SLIDE 9 — TRACTION ========== -->
-    <section class="slide s-traction" data-i="9">
-      <div class="title-block">
-        <div data-anim data-d="1" class="label">traction · 14 weeks · closed beta</div>
-        <h2 data-anim data-d="2" class="h1">people are <em>using</em> it.<br/>and bringing friends.</h2>
-      </div>
-      <div class="layout">
-        <div data-anim data-d="3" class="grid">
-          <div class="kpi"><div class="num" data-counter data-target="47">0</div><div class="lab">founders · closed beta</div></div>
-          <div class="kpi"><div class="num"><span data-counter data-target="12">0</span><em>tasks/day</em></div><div class="lab">avg per active user</div></div>
-          <div class="kpi"><div class="num"><span data-counter data-target="8.5" data-decimals="1">0</span><em>hrs/wk</em></div><div class="lab">saved · self-reported median</div></div>
-          <div class="kpi"><div class="num"><span data-counter data-target="94">0</span><em>%</em></div><div class="lab">drafts auto-approved · n=14,212</div></div>
-        </div>
-        <div data-anim data-d="6" class="chart">
-          <div class="head"><span>weekly active users</span><span><em>+31% w/w · 14 weeks</em></span></div>
-          <svg viewBox="0 0 600 300" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="g-grow" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#bde055" stop-opacity="0.4"/>
-                <stop offset="100%" stop-color="#bde055" stop-opacity="0"/>
-              </linearGradient>
-            </defs>
-            <!-- gridlines -->
-            <line x1="0" y1="60"  x2="600" y2="60"  stroke="#2e2b24" stroke-width="0.5"/>
-            <line x1="0" y1="120" x2="600" y2="120" stroke="#2e2b24" stroke-width="0.5"/>
-            <line x1="0" y1="180" x2="600" y2="180" stroke="#2e2b24" stroke-width="0.5"/>
-            <line x1="0" y1="240" x2="600" y2="240" stroke="#2e2b24" stroke-width="0.5"/>
-            <!-- curve  -->
-            <path d="M0,290 L40,287 L80,283 L120,278 L160,270 L200,258 L240,242 L280,222 L320,196 L360,164 L400,128 L440,88 L480,52 L520,28 L560,14 L600,8"
-                  fill="none" stroke="#bde055" stroke-width="3"
-                  stroke-dasharray="900" data-draw style="--len:900; filter: drop-shadow(0 0 6px #bde055);"/>
-            <path d="M0,290 L40,287 L80,283 L120,278 L160,270 L200,258 L240,242 L280,222 L320,196 L360,164 L400,128 L440,88 L480,52 L520,28 L560,14 L600,8 L600,300 L0,300 Z"
-                  fill="url(#g-grow)" opacity="0.9"/>
-            <!-- last dot -->
-            <circle cx="600" cy="8" r="6" fill="#bde055" filter="drop-shadow(0 0 8px #bde055)"/>
-            <text x="554" y="42" font-family="JetBrains Mono" font-size="12" fill="#bde055" font-weight="600" letter-spacing="2">w14</text>
-          </svg>
-          <div style="display:flex; justify-content: space-between; font-family: var(--mono); font-size: 11px; color: var(--fg-4); letter-spacing: 0.18em; text-transform: uppercase;">
-            <span>w1 · 4 founders</span>
-            <span>w14 · <b style="color:var(--accent)">47</b> founders · 14k actions/wk</span>
           </div>
         </div>
       </div>
+      <div class="footer"><span>trust surface: approval, not chat</span><span>04 / 10</span></div>
     </section>
 
-    <!-- ========== SLIDE 10 — BUSINESS MODEL ========== -->
-    <section class="slide s-bizmodel" data-i="10">
-      <div class="title-block">
-        <div data-anim data-d="1" class="label">business model</div>
-        <h2 data-anim data-d="2" class="h1">three tiers.<br/>one absurd <em>ltv/cac</em>.</h2>
+    <section class="slide" data-title="Traction">
+      <div class="stack">
+        <div class="eyebrow">Closed beta traction</div>
+        <h2 class="title">Usage exists. Revenue is the next proof.</h2>
+        <p class="subtitle">Waitlist is not traction. We are converting it into active beta users, then paid users.</p>
       </div>
-      <div class="tiers">
-        <div data-anim data-d="3" class="tier">
-          <h5>personal</h5>
-          <div class="price">$49<em>/mo</em></div>
-          <ul>
-            <li>unlimited text drafts</li>
-            <li>voice clone · text only</li>
-            <li>3 connected apps</li>
-            <li>200 actions / mo</li>
-          </ul>
+      <div class="grid-3">
+        <div class="metric">
+          <div class="num">47</div>
+          <div class="label">active beta founders</div>
         </div>
-        <div data-anim data-d="4" class="tier featured">
-          <h5>pro · most popular</h5>
-          <div class="price">$199<em>/mo</em></div>
-          <ul>
-            <li>everything in personal</li>
-            <li>voice calls (twin answers as you)</li>
-            <li>unlimited apps + custom tools</li>
-            <li>2,000 actions / mo</li>
-            <li>priority sync &amp; longer context</li>
-          </ul>
+        <div class="metric">
+          <div class="num">12</div>
+          <div class="label">tasks per active user per day</div>
         </div>
-        <div data-anim data-d="5" class="tier">
-          <h5>founder pack</h5>
-          <div class="price">$499<em>/mo</em></div>
-          <ul>
-            <li>everything in pro</li>
-            <li>multi-account ops</li>
-            <li>custom integrations</li>
-            <li>white-glove onboarding</li>
-            <li>unlimited actions</li>
-          </ul>
+        <div class="metric">
+          <div class="num">94%</div>
+          <div class="label">drafts approved after review</div>
         </div>
       </div>
-      <div class="economics">
-        <div data-anim data-d="6" class="ue"><div class="lab">blended arpu</div><div class="val">$109<span style="font-family:var(--mono);font-size:0.4em;color:var(--fg-3);margin-left:4px;">/mo</span></div></div>
-        <div data-anim data-d="7" class="ue"><div class="lab">cac</div><div class="val">$42</div></div>
-        <div data-anim data-d="7" class="ue hero"><div class="lab">ltv (30 mo)</div><div class="val">$3,270</div></div>
-        <div data-anim data-d="8" class="ue hero"><div class="lab">ltv / cac</div><div class="val">78×</div></div>
-        <div data-anim data-d="8" class="ue"><div class="lab">gross margin</div><div class="val">79.8%</div></div>
-      </div>
+      <div class="quote">The next milestone is not more deck polish. It is paid conversion.</div>
+      <div class="footer"><span>14,212 actions per week in beta</span><span>05 / 10</span></div>
     </section>
 
-    <!-- ========== SLIDE 11 — COMPETITION ========== -->
-    <section class="slide s-comp" data-i="11">
-      <div class="title-block">
-        <div data-anim data-d="1" class="label">competitive landscape</div>
-        <h2 data-anim data-d="2" class="h1">no one is in <em>this quadrant</em>.</h2>
-      </div>
-      <div class="layout">
-        <div data-anim data-d="3" class="matrix">
-          <div class="grid-bg"></div>
-          <span class="axis-y">sounds like you</span>
-          <span class="axis-x">executes real work</span>
-
-          <div class="pin" style="top: 76%; left: 24%;"><div class="dot"></div><span class="name">chatgpt · claude</span></div>
-          <div class="pin" style="top: 70%; left: 32%;"><div class="dot"></div><span class="name">gemini · pi</span></div>
-          <div class="pin" style="top: 32%; left: 72%;"><div class="dot"></div><span class="name">zapier · n8n</span></div>
-          <div class="pin" style="top: 38%; left: 78%;"><div class="dot"></div><span class="name">magic · athena</span></div>
-          <div class="pin" style="top: 60%; left: 56%;"><div class="dot"></div><span class="name">lindy · adept</span></div>
-          <div class="pin us" style="top: 20%; left: 80%;"><div class="dot"></div><span class="name">twinly</span></div>
+    <section class="slide" data-title="Beta Plan">
+      <div class="split">
+        <div class="stack">
+          <div class="eyebrow">Go-to-market</div>
+          <h2 class="title">Founder-led beta, not paid growth.</h2>
+          <p class="subtitle">First sales should come from us talking to users every day.</p>
         </div>
-        <div data-anim data-d="5" class="moats">
-          <h5>defensibility</h5>
-          <div class="moat"><span class="m">01</span><span class="t"><b>voice fingerprint.</b> proprietary 12-axis profile, deepens with every action approved.</span></div>
-          <div class="moat"><span class="m">02</span><span class="t"><b>14-day training data.</b> the longer you've used twinly, the more it knows. high switching cost.</span></div>
-          <div class="moat"><span class="m">03</span><span class="t"><b>local-first architecture.</b> no cloud writes. zero gdpr surface. cloud-native incumbents can't match without rewrite.</span></div>
-          <div class="moat"><span class="m">04</span><span class="t"><b>approval queue UX.</b> built around trust, not chat. won't be replicated by chatbot pivots.</span></div>
+        <div class="timeline">
+          <div class="step"><b>week 1</b><span>Pick 50 high-intent founders from the waitlist and personal outreach.</span></div>
+          <div class="step"><b>week 2</b><span>Run daily group chats, watch usage, fix the highest-friction workflow.</span></div>
+          <div class="step"><b>day 7</b><span>Ask each user to pay. If no, ask why and keep learning.</span></div>
+          <div class="step"><b>launch</b><span>Use proof from paid beta users for the public launch video on X.</span></div>
         </div>
       </div>
+      <div class="footer"><span>personal outreach beats spam</span><span>06 / 10</span></div>
     </section>
 
-    <!-- ========== SLIDE 12 — ASK ========== -->
-    <section class="slide s-ask" data-i="13">
-      <div data-anim data-d="1" class="label">the ask</div>
-      <div class="raise">
-        <div data-anim data-d="2" class="amount">$<span data-counter data-target="4">0</span>M<span style="color:var(--fg);">.</span></div>
-        <div data-anim data-d="3" class="terms">seed · <b>$24M post</b> · 16.7% dilution · 18-month runway</div>
+    <section class="slide" data-title="Business Model">
+      <div class="stack">
+        <div class="eyebrow">Business model</div>
+        <h2 class="title">Pricing is a live test, not a spreadsheet flex.</h2>
+        <p class="subtitle">We will know we have leverage when founders pay after one week of use.</p>
       </div>
-      <div data-anim data-d="4" class="uof">
-        <div class="bar">
-          <div class="seg" style="background:var(--accent); width:60%;">60% · engineering</div>
-          <div class="seg" style="background:var(--accent-dim); width:20%;">20% · growth</div>
-          <div class="seg" style="background:var(--ember); width:15%;">15% · infra</div>
-          <div class="seg" style="background:var(--fg-3); width:5%; color:var(--fg);">5%</div>
+      <div class="price-table">
+        <div class="price">
+          <h3>Beta pro</h3>
+          <div class="amount">$49<span class="muted" style="font-size:0.28em; letter-spacing:0;">/mo</span></div>
+          <p>Inbox follow-up, scheduling, investor/customer drafts, approval queue.</p>
         </div>
-        <div class="legend">
-          <div class="it"><h5><span class="sw" style="background:var(--accent);"></span>engineering</h5><p>5 hires · agent runtime, voice, eng-on-call</p></div>
-          <div class="it"><h5><span class="sw" style="background:var(--accent-dim);"></span>growth</h5><p>founder-led content + paid · sf founder ops</p></div>
-          <div class="it"><h5><span class="sw" style="background:var(--ember);"></span>infrastructure</h5><p>anthropic · voice clone · agent compute</p></div>
-          <div class="it"><h5><span class="sw" style="background:var(--fg-3);"></span>legal &amp; admin</h5><p>privacy · soc2 · entity</p></div>
+        <div class="price">
+          <h3>Founder ops</h3>
+          <div class="amount">$199<span class="muted" style="font-size:0.28em; letter-spacing:0;">/mo</span></div>
+          <p>More accounts, higher task volume, custom workflows, white-glove onboarding.</p>
         </div>
       </div>
-      <div data-anim data-d="6" class="targets">
-        <div class="t"><div class="yr">end of year 1</div><div class="v">1k paid · <span class="accent">$1.3M ARR</span></div></div>
-        <div class="t"><div class="yr">end of year 2</div><div class="v">10k paid · <span class="accent">$13M ARR</span> · series A</div></div>
-        <div class="t"><div class="yr">end of year 3</div><div class="v">50k paid · <span class="accent">$65M ARR</span></div></div>
+      <div class="grid-3">
+        <div class="card"><strong class="green">Goal</strong><span>First $10k MRR from founder-led sales.</span></div>
+        <div class="card"><strong class="blue">Then</strong><span>Reach $100k to $250k in founder-led revenue before raising.</span></div>
+        <div class="card"><strong>Why</strong><span>Revenue gives the fundraise leverage the current deck does not.</span></div>
       </div>
-      <div data-anim data-d="8" style="margin-top: clamp(20px, 2.4vh, 36px); padding-top: clamp(16px, 2vh, 28px); border-top: 1px solid var(--rule); width: 100%; max-width: 900px; display: grid; gap: 8px; text-align: left;">
-        <div style="font-family: var(--mono); font-size: clamp(11px, 0.85vw, 14px); letter-spacing: 0.28em; text-transform: uppercase; color: var(--accent); font-weight: 600;">first 3 hires with this round</div>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; font-family: var(--sans); font-size: clamp(13px, 0.95vw, 16px); color: var(--fg-2); line-height: 1.4;">
-          <div><b style="color:var(--fg);">founding engineer</b><br/><span style="color:var(--fg-3);">agent runtime · sf or remote</span></div>
-          <div><b style="color:var(--fg);">founding designer</b><br/><span style="color:var(--fg-3);">product surface · sf preferred</span></div>
-          <div><b style="color:var(--fg);">head of growth</b><br/><span style="color:var(--fg-3);">founder-network playbook</span></div>
-        </div>
-      </div>
+      <div class="footer"><span>revenue over spreadsheet theater</span><span>07 / 10</span></div>
     </section>
 
-    <!-- ========== SLIDE 14 — VISION ========== -->
-    <section class="slide s-vision" data-i="14">
-      <div data-anim data-d="1" class="label">vision · 10 years</div>
-      <h1 data-anim data-d="2" class="big">in ten years,<br/><em>everyone</em><br/>will have a twin.</h1>
-      <p data-anim data-d="4" class="small">the question is <span>whose</span>.</p>
-      <div data-anim data-d="6" class="sig">
-        <span>twinly · founders@twinly.tech</span>
-        <span class="lime-line"></span>
-        <span><b>twinly.tech</b></span>
+    <section class="slide" data-title="Competition">
+      <div class="stack">
+        <div class="eyebrow">Competition</div>
+        <h2 class="title">The alternative is still founder time.</h2>
       </div>
+      <div class="competitors">
+        <div class="competitor">
+          <h3>ChatGPT</h3>
+          <p>Can draft, but cannot safely execute across inbox and calendar.</p>
+        </div>
+        <div class="competitor">
+          <h3>Zapier</h3>
+          <p>Automates rigid flows, but breaks when context or tone matters.</p>
+        </div>
+        <div class="competitor">
+          <h3>Assistant</h3>
+          <p>Works, but is expensive, slow, and still needs constant context.</p>
+        </div>
+        <div class="competitor us">
+          <h3>twinly</h3>
+          <p>Founder voice, inbox context, calendar execution, approval before send.</p>
+        </div>
+      </div>
+      <div class="footer"><span>execution + personal context + approval</span><span>08 / 10</span></div>
     </section>
 
-  </div>
+    <section class="slide" data-title="Team">
+      <div class="stack">
+        <div class="eyebrow">Team</div>
+        <h2 class="title">Two founders close to the user and the product.</h2>
+        <p class="subtitle">The founders own the first 100 to 250k in sales.</p>
+      </div>
+      <div class="team">
+        <div class="person">
+          <div class="photo">OM</div>
+          <div>
+            <h3>Ojasva Mishra</h3>
+            <div class="role">Founder | product + engineering</div>
+            <p>Built the Mac app, iOS companion, agent runtime, and approval queue. Owns product, shipping, and founder-led sales.</p>
+          </div>
+        </div>
+        <div class="person">
+          <div class="photo">ZJ</div>
+          <div>
+            <h3>Zechariah Jemaneh</h3>
+            <div class="role">Cofounder | ops + customer discovery</div>
+            <p>Runs beta operations, customer interviews, pricing tests, and the daily feedback loop with beta users.</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer"><span>founder-led sales, daily beta loop</span><span>09 / 10</span></div>
+    </section>
+
+    <section class="slide" data-title="Ask">
+      <div class="stack">
+        <div class="eyebrow">What we need now</div>
+        <h2 class="title">Not raising now. Building leverage first.</h2>
+        <p class="subtitle">We are applying to YC and using this deck to recruit beta users, advisors, and early believers.</p>
+      </div>
+      <div class="ask-list">
+        <div class="ask">
+          <b>50 beta users</b>
+          <span>Founders who will use twinly every day for one week.</span>
+        </div>
+        <div class="ask">
+          <b>Paid conversion</b>
+          <span>Ask every active beta user to pay after day 7.</span>
+        </div>
+        <div class="ask">
+          <b>K-factor proof</b>
+          <span>Measure referrals. Consumer-grade growth needs a K-factor above 2.</span>
+        </div>
+      </div>
+      <div class="footer"><span>twinly.tech | founders@twinly.tech</span><span>10 / 10</span></div>
+    </section>
+  </main>
 </div>
 
-<div class="dots" id="dots"></div>
-<div class="progress"><div id="progress-fill" class="progress-fill"></div></div>
+<div class="dots" id="dots" aria-label="Slide navigation"></div>
 
 <script>
 (() => {
-  const slides = Array.from(document.querySelectorAll('.slide'));
-  const total = slides.length;
-  const counter = document.getElementById('counter');
-  const fill = document.getElementById('progress-fill');
-  const dotsEl = document.getElementById('dots');
-  const hint = document.getElementById('hint');
-  let idx = 0;
+  const slides = Array.from(document.querySelectorAll(".slide"));
+  const dots = document.getElementById("dots");
+  let index = 0;
 
-  // Build dots
-  slides.forEach((_, i) => {
-    const d = document.createElement('div');
-    d.className = 'd';
-    d.addEventListener('click', () => go(i));
-    dotsEl.appendChild(d);
-  });
-  const dotEls = Array.from(dotsEl.children);
-
-  function pad(n) { return String(n + 1).padStart(2, '0'); }
-
-  function runCounters(slide) {
-    const counters = slide.querySelectorAll('[data-counter]');
-    counters.forEach((el) => {
-      const target = parseFloat(el.dataset.target);
-      const decimals = parseInt(el.dataset.decimals || '0', 10);
-      const dur = 1100;
-      const t0 = performance.now();
-      function step(t) {
-        const p = Math.min(1, (t - t0) / dur);
-        const eased = 1 - Math.pow(1 - p, 4); // ease-out-quart
-        const v = target * eased;
-        el.textContent = decimals ? v.toFixed(decimals) : Math.round(v);
-        if (p < 1) requestAnimationFrame(step);
-      }
-      requestAnimationFrame(step);
-    });
-  }
-
-  function go(i) {
-    if (i < 0 || i >= total) return;
-    slides[idx].classList.remove('active');
-    dotEls[idx].classList.remove('active');
-    idx = i;
-    slides[idx].classList.add('active');
-    dotEls[idx].classList.add('active');
-    counter.textContent = `${pad(idx)} / ${String(total).padStart(2, '0')}`;
-    fill.style.width = `${((idx + 1) / total) * 100}%`;
-    runCounters(slides[idx]);
-    hint.classList.add('fade');
-  }
-
-  function next() { go((idx + 1) % total); }
-  function prev() { go((idx - 1 + total) % total); }
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); }
-    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
-    else if (e.key === 'Home') { go(0); }
-    else if (e.key === 'End')  { go(total - 1); }
-    else if (e.key.toLowerCase() === 'f') { document.documentElement.requestFullscreen?.(); }
-    else if (e.key === 'Escape') { document.exitFullscreen?.(); }
-    else if (/^[0-9]$/.test(e.key)) { const n = parseInt(e.key, 10); if (n > 0 && n <= total) go(n - 1); }
+  slides.forEach((slide, i) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.setAttribute("aria-label", `Go to slide ${i + 1}: ${slide.dataset.title}`);
+    button.addEventListener("click", () => go(i));
+    dots.appendChild(button);
   });
 
-  document.addEventListener('click', (e) => {
-    if (e.target.closest('.dots') || e.target.closest('a')) return;
+  const dotButtons = Array.from(dots.children);
+
+  function go(nextIndex) {
+    if (nextIndex < 0 || nextIndex >= slides.length) return;
+    slides[index].classList.remove("active");
+    dotButtons[index].classList.remove("active");
+    index = nextIndex;
+    slides[index].classList.add("active");
+    dotButtons[index].classList.add("active");
+    const progress = ((index + 1) / slides.length) * 100;
+    document.documentElement.style.setProperty("--progress", `${progress}%`);
+  }
+
+  function next() { go((index + 1) % slides.length); }
+  function prev() { go((index - 1 + slides.length) % slides.length); }
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowRight" || event.key === " " || event.key === "PageDown") {
+      event.preventDefault();
+      next();
+    } else if (event.key === "ArrowLeft" || event.key === "PageUp") {
+      event.preventDefault();
+      prev();
+    } else if (event.key === "Home") {
+      go(0);
+    } else if (event.key === "End") {
+      go(slides.length - 1);
+    } else if (event.key.toLowerCase() === "f") {
+      document.documentElement.requestFullscreen?.();
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    if (event.target.closest("#dots")) return;
     next();
   });
 
-  // Init
-  go(0);
-  fill.style.width = `${(1 / total) * 100}%`;
+  const initial = Math.max(0, Math.min(slides.length - 1, Number(new URLSearchParams(location.search).get("slide")) - 1 || 0));
+  go(initial);
 })();
 </script>
-
 </body>
 </html>
